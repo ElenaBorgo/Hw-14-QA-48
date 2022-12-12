@@ -16,18 +16,15 @@ public class ProductManagerTest {
     Product item1 = new Book(1, "Evgeni Onegin", 300, "A.Pushkin");
     Product item2 = new Smartphone(33, "android", 20_000, "samsung company");
     Product item3 = new Book(23, "Anna Karenina", 500, "L.Tolstoy");
-    Product item4 = new Smartphone(140, "IPhone", 330_000, "apple company");
+    Product item4 = new Smartphone(140, "android", 330_000, "sony company");
 
-    @BeforeEach
-    public void setup() {
+    @Test
+    public void shouldShowAll() {
         manager.add(item1);
         manager.add(item2);
         manager.add(item3);
         manager.add(item4);
-    }
 
-    @Test
-    public void shouldShowAll() {
         Product[] expected = {item1, item2, item3, item4};
         Product[] actual = manager.getProducts();
 
@@ -36,6 +33,11 @@ public class ProductManagerTest {
 
     @Test
     public void shouldSearchByName() {
+        manager.add(item1);
+        manager.add(item2);
+        manager.add(item3);
+        manager.add(item4);
+
         Product[] expected = {item1};
         Product[] actual = manager.searchBy("Onegin");
 
@@ -44,8 +46,26 @@ public class ProductManagerTest {
 
     @Test
     public void shouldSearchByPhoneName() {
-        Product[] expected = {item2};
+        manager.add(item1);
+        manager.add(item2);
+        manager.add(item3);
+        manager.add(item4);
+
+        Product[] expected = {item2, item4};
         Product[] actual = manager.searchBy("android");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void ifNoSameName() {
+        manager.add(item1);
+        manager.add(item2);
+        manager.add(item3);
+        manager.add(item4);
+
+        Product[] expected = {};
+        Product[] actual = manager.searchBy("Harry Potter");
 
         Assertions.assertArrayEquals(expected, actual);
     }
