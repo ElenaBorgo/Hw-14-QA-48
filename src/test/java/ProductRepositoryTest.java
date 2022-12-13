@@ -6,6 +6,7 @@ import ru.netology.Product.Book;
 import ru.netology.Product.Product;
 import ru.netology.Product.Smartphone;
 import ru.netology.Repository.ProductRepository;
+import ru.netology.exceptions.NotFoundException;
 
 public class ProductRepositoryTest {
 
@@ -48,6 +49,15 @@ public class ProductRepositoryTest {
     }
 
     @Test
+    public void removeNotFoundId() {
+        repo.removeById(45);
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            repo.removeById(45);
+        });
+    }
+
+    @Test
     public void shouldShowAll() {
         repo.findAll();
 
@@ -56,6 +66,5 @@ public class ProductRepositoryTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
-
-
 }
+
