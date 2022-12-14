@@ -50,8 +50,6 @@ public class ProductRepositoryTest {
 
     @Test
     public void removeNotFoundId() {
-        repo.removeById(45);
-
         Assertions.assertThrows(NotFoundException.class, () -> {
             repo.removeById(45);
         });
